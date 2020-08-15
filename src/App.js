@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import "./Components/Navigation/NavBar";
+import NavBar from "./Components/Navigation/NavBar";
+import MainImage from "./Components/MainImage/MainImage";
+import Backdrop from "./Components/Backdrop/Backdrop";
+import SideDrawer from "./Components/SideDrawer/SideDrawer";
 
 function App() {
+  const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
+
+  function drawerToggleClickHandler() {
+    setSideDrawerOpen(true);
+  }
+
+  function backdropClickHandler() {
+    setSideDrawerOpen(false);
+  }
+
+  let backdrop;
+
+  if (sideDrawerOpen) {
+    backdrop = <Backdrop click={backdropClickHandler} />;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar drawerClickHandler={drawerToggleClickHandler} />
+      <SideDrawer show={sideDrawerOpen} />
+      {backdrop}
+      <MainImage />
     </div>
   );
 }
